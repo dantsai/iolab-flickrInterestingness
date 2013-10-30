@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Flickr Interestingness Visualization</title>
+    <meta charset="utf-8">
+
+    <!-- link to css file -->
+    <link rel="stylesheet" type="text/css" href="_css/style.css">
+    <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="_css/bootstrap.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"
+
+    <!-- link to js file -->
+    <script src="_js/slider.js"></script>
+    <script src="_js/jquery-1.10.2.min.js"></script>
+    <script src="_js/bootstrap.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+</head>
+
+<body>
+	<div id="header">
+		<h2><i class="icon-flickr"></i>Interestingness</h2>
+	</div><!-- /header -->
+
+	<div id="photo-holder">
+		<div class="slideshow">
+              <div id="myCarousel" class="carousel slide">
+                <ol class="carousel-indicators">
+                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                  <li data-target="#myCarousel" data-slide-to="1"></li>
+                  <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+                <div class="carousel-inner">
+                  <div class="item active">
+                    <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-01.jpg" alt="">
+                    <div class="carousel-caption">
+                      <h4>First Thumbnail label</h4>
+                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-02.jpg" alt="">
+                    <div class="carousel-caption">
+                      <h4>Second Thumbnail label</h4>
+                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                  </div>
+                  <div class="item">
+                    <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-03.jpg" alt="">
+                    <div class="carousel-caption">
+                      <h4>Third Thumbnail label</h4>
+                      <p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
+                    </div>
+                  </div>
+                </div>
+                <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+                <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+              </div>
+        </div><!-- /slideshow -->
+    </div><!-- /photo-holder -->
+
+
+
+
+
+<!--
+		<div id="myCarousel" class="carousel slide">
+  			<ol class="carousel-indicators">
+    			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    			<li data-target="#myCarousel" data-slide-to="1"></li>
+    			<li data-target="#myCarousel" data-slide-to="2"></li>
+  			</ol>
+   -->			<!-- Carousel items -->
+  <!-- 				<div class="carousel-inner">
+    			<div class="active item">…</div>
+    			<div class="item">…</div>
+    			<div class="item">…</div>
+  			</div>
+ --> 			<!-- Carousel nav -->
+ <!--  				<a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+  				<a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
+		</div>
+ -->
+
+	</div><!-- /photo-holder -->
+
+	<div id="criteria">
+
+		<div id="slider">
+		</div><!-- /slider -->
+
+
+		<div id="sort-by">
+			<a href="#"><i class="sort-icon icon-tag"></i></a>
+			<a href="#"><i class="sort-icon icon-camera"></i></a>
+			<a href="#"><i class="sort-icon icon-user"></i></a>
+		</div><!-- /sort-by -->
+
+	</div><!-- /criteria -->
+
+
+	<div id="charts">
+
+
+
+	</div><!-- / charts-->
+
+
+  <script>
+  $(function() {
+    $( "#slider" ).slider();
+  });
+  </script>
+
+
+
+</body>
+</html>
+
+
+

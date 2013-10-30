@@ -1,0 +1,131 @@
+body {
+    margin: 0 auto;
+    padding-bottom: 50px;
+    background: url(../_img/binding_dark.png) repeat;
+
+}
+
+
+/* header */
+
+#header {
+    padding: 10px;
+    text-shadow: 2px 2px #696969;
+    color: #fff;
+    background: url(../_img/binding_dark.png) repeat;
+    /*    background-color: #0063DC; (flickr blue) */
+    box-shadow: 1px 1px 10px #696969;
+    -moz-box-shadow: 1px 1px 10px #696969;
+    -webkit-box-shadow: 1px 1px 10px #696969;
+}
+
+#header i {
+    margin-left: 10px;
+    margin-right: 40px;
+    font-size: 40px;
+    line-height: 30px;
+}
+
+
+/* photo-holder */
+
+#photo-holder {
+    min-height: 550px;
+    background: url(../_img/binding_light.png) repeat;
+    padding-top: 15px;
+}
+
+.slideshow {
+    margin: 0 auto;
+    width: 800px;
+    padding: 39px 19px 14px;
+    *padding-top: 19px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+
+
+
+/* criteria */
+
+#criteria-container {
+    text-align: center;
+    padding: 0 auto;
+}
+
+
+#slider {
+    width: 600px;
+    float: right;
+    margin: 30px 10px;
+
+}
+
+#sort-by {
+    float: right;
+}
+
+
+#criteria {
+    min-height: 70px;
+    background-color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* criteria / icons */
+
+#criteria i {
+    font-size: 40px;
+    color: #000;
+    margin-right: 20px;
+    border: 3px solid #000;
+    border-radius: 50%;
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    vertical-align: middle;
+    text-align: center
+}
+
+#criteria a {
+    text-decoration: none;
+}
+
+#criteria a:hover i {
+    color: #0063DC;
+    border: 3px solid #FF0084;
+    text-decoration: none;
+}
+
+
+
+
+
+/* charts */
+
+#charts {
+    min-height: 300px;
+}
+
+
+
+
+
+/* content */
+
+#container {
+    margin-top: 5px;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.column {
+    width: 650px;
+    margin: 0 auto;
+}
