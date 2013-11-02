@@ -45,10 +45,7 @@ $(document).ready(function(){
                           var url2 = "http://api.flickr.com/services/rest/?method=flickr.photos.getExif&api_key=803b4fba97fed821c7d451d31da3c60f&photo_id="+value.id+"&format=json&jsoncallback=?"
                           $.getJSON(url2, function(data){
                              
-                                 allCameras.push(value._content);
-
-                                 console.log(" tags list size"+allTags.length);
-                                 console.log(" camera list size"+allCameras.length);
+                                 allCameras.push(data.photo.camera);
 
                         
                             });
