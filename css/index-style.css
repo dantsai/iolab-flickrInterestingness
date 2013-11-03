@@ -1,6 +1,6 @@
 body {
     padding-bottom: 50px;
-    background: url(../_img/binding_dark.png) repeat;
+    background: url(../img/binding_dark.png) repeat;
 }
 
 
@@ -10,7 +10,7 @@ body {
     padding: 5px;
     text-shadow: 2px 2px #696969;
     color: #fff;
-    background: url(../_img/binding_dark.png) repeat;
+    background: url(../img/binding_dark.png) repeat;
     /*    background-color: #0063DC; (flickr blue) */
     box-shadow: 1px 1px 10px #696969;
     -moz-box-shadow: 1px 1px 10px #696969;
@@ -33,7 +33,7 @@ body {
 
 #photo-holder {
     min-height: 250px;
-    background: url(../_img/binding_light.png) repeat;
+    background: url(../img/binding_light.png) repeat;
     padding-top: 10px;
     padding-bottom: 10px;
 }
