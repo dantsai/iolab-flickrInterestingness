@@ -2,6 +2,38 @@
 // var apikey = '844ff70b5e025eac452ff98c661b7295';
 // var secret = '821ad3df37bd73f5';
 
+
+/*
+Primary Data Structures
+One set of JSON arrays per time period (month). Each array stored in a separate .json file that we will load via $.GET and json.parse
+
+Array of Photo objects:
+{
+	id: 12345,
+	camera: "Canon 5D",
+	make: "Canon",
+	model: "5D",
+	tags: ["tag1","tag2","tag3"]
+}
+
+Array of Tag objects:
+{
+	tagLabel: "bridge",
+	count: 193,
+	photoIDs: [1234, 3841, 374, 173, 42853]
+}
+
+
+Array of Camera objects:
+{
+	camera: "Canon 5D",
+	make: "Canon",
+	model: "5D",
+	count: 48,
+	photoIDs: [19481, 17263, 18723, 123, 44]
+}
+*/
+
 var interestingPhotos = [];
 var allTags = [];
 var allCameras = [];
