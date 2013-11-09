@@ -7,7 +7,7 @@
 Primary Data Structures
 One set of JSON arrays per time period (month). Each array stored in a separate .json file that we will load via $.GET and json.parse
 
-Array of Photo objects:
+Array of Photo objects (allPhotos):
 {
 	id: 12345,
 	camera: "Canon 5D",
@@ -16,7 +16,7 @@ Array of Photo objects:
 	tags: ["tag1","tag2","tag3"]
 }
 
-Array of Tag objects:
+Array of Tag objects (allTags):
 {
 	tagLabel: "bridge",
 	count: 193,
@@ -24,7 +24,7 @@ Array of Tag objects:
 }
 
 
-Array of Camera objects:
+Array of Camera objects (allCameras):
 {
 	camera: "Canon 5D",
 	make: "Canon",
@@ -34,7 +34,7 @@ Array of Camera objects:
 }
 */
 
-var interestingPhotos = [];
+var allPhotos = [];
 var allTags = [];
 var allCameras = [];
 var ajaxConnections = 0;
@@ -48,8 +48,6 @@ $(document).ready(function(){
            // var enddate = $("#enddatepicker").val() );
 
             console.log( "startdate = "+startdate );
-            var tagsWithSpaces;
-
 
 			// get list of interesting photos for date      
             ajaxConnections++;
@@ -58,24 +56,23 @@ $(document).ready(function(){
 				ajaxConnections--;
 
 				$.each(data.photos.photo, function(key,value){
-                    tagsWithSpaces=value.tags.trim();
+                    var tagString=value.tags.trim();
+                    var tagArray = tagString.split(' ');
+                    var cameraString, cameraMake, cameraModel;
 
-                    var tagsWithoutSpaces = tagsWithSpaces.split(' ');
 
-                    allTags.push(tagsWithoutSpaces);
-
-                    console.log("getting exif for " + value.id);
-
-                    ajaxConnections++;
-					console.log("ajaxConnections: " + ajaxConnections);
+                    // add photos and tags into the allPhotos and allTags arrays
+                    // ADD CODE
+                    // ADD CODE
 
 					//get camera info for each photo
+                    ajaxConnections++;
+                    console.log("getting exif for " + value.id);
+					console.log("ajaxConnections: " + ajaxConnections);
 					$.getJSON('http://api.flickr.com/services/rest/?method=flickr.photos.getExif&api_key=' + apikey + '&photo_id=' + value.id + '&format=json&jsoncallback=?',
 					function(data) {
 						ajaxConnections--;
 						console.log("ajaxConnections: " + ajaxConnections);
-
-						var cameraString, cameraMake, cameraModel;
 
 						if(data.stat == 'fail') {
 							// some sort of error. if everything is set up correctly, probably permissions, or EXIF is not available.
@@ -100,6 +97,13 @@ $(document).ready(function(){
 								}
 							}
 						}
+
+						// add cameras into the allCameras array. Also update the allPhotos array with camera information
+						// ADD CODE
+						// ADD CODE
+
+
+
 					})
 					.fail(function() {
 						console.log("flickr.photos.getExif fail for " + value.id);
@@ -109,8 +113,10 @@ $(document).ready(function(){
 			.fail(function() {
 				console.log("flickr.interestingness.getList fail");
 			});
-						
-    
+
+    }); 
+});
+
 /*
             var url = "http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=803b4fba97fed821c7d451d31da3c60f&date=" + startdate + "&extras=tags&per_page=500&format=json&jsoncallback=?";
 
@@ -165,8 +171,8 @@ $(document).ready(function(){
                 	console.log("ajaxConnections = " + ajaxConnections);
                 }
             });
-*/
 
             //console.log( JSON.stringify(data) );
-            }); 
-});
+             }); 
+ });
+*/
