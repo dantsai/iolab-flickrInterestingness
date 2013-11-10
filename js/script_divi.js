@@ -172,14 +172,13 @@ function getExif(photoObj) {
 				// finished with all requests, stringify
 				$("#allPhotosResult").text(JSON.stringify(allPhotos, null, " "));
 				$("#allTagsResult").text(JSON.stringify(allTags, null, " "));
-
-
+				plotTagHist(allTags);
 }
 
 				$("#allCamerasResult").text(JSON.stringify(allCameras, null, " "));
 			}
 		}
-	})
+	)
 	.fail(function() {
 		console.log("flickr.photos.getExif fail for " + photoObj.id);
 		--ajaxConnections;
