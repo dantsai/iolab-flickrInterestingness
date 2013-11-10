@@ -115,8 +115,8 @@ $(document).ready(function(){
 
 							//get camera info for each photo
 			                ajaxConnections++;
-			                console.log("getting exif for " + value.id);
-							console.log("ajaxConnections: " + ajaxConnections);
+			                // console.log("getting exif for " + value.id);
+							// console.log("ajaxConnections: " + ajaxConnections);
 							getExif(value);
 
 			            });
@@ -136,7 +136,7 @@ function getExif(photoObj) {
 	$.getJSON('http://api.flickr.com/services/rest/?method=flickr.photos.getExif&api_key=' + apikey + '&photo_id=' + photoObj.id + '&format=json&jsoncallback=?',
 	function(data) {
 		ajaxConnections--;
-		console.log("ajaxConnections: " + ajaxConnections);
+		// console.log("ajaxConnections: " + ajaxConnections);
 
         var cameraMake, cameraModel;
 
@@ -147,7 +147,7 @@ function getExif(photoObj) {
 			console.log("EXIF worked for " + photoObj.id);
 			if(data.photo.camera) {
 				// camera exists
-				console.log(photoObj.id + " camera: " + data.photo.camera);
+				// console.log(photoObj.id + " camera: " + data.photo.camera);
 			} else {
 				console.log("no camera string");
 			}
@@ -155,10 +155,10 @@ function getExif(photoObj) {
 			for(var i=0,j=data.photo.exif.length ; i < j ; ++i) {
 				// check if this exif item is make or model. the case may be different depending on camera... depending on how much variation we have in capitalization, we may have to save a different "normalized" name for binning, and a separate "display" name
 				if(data.photo.exif[i].label.toLowerCase() === 'make') {
-					console.log(photoObj.id + " make: " + data.photo.exif[i].raw._content);
+					// console.log(photoObj.id + " make: " + data.photo.exif[i].raw._content);
 					cameraMake = data.photo.exif[i].raw._content;
 				} else if(data.photo.exif[i].label.toLowerCase() === 'model') {
-					console.log(photoObj.id + " model: " + data.photo.exif[i].raw._content);
+					// console.log(photoObj.id + " model: " + data.photo.exif[i].raw._content);
 					cameraModel = data.photo.exif[i].raw._content;
 				}
 			}
@@ -188,6 +188,30 @@ function getExif(photoObj) {
 function plotTagHist(allTags){
 				console.log('Tags:');
 				console.log(allTags);
+
+
+
+}
+
+$(document).ready(function() {
+	// set up the svg
+	var w = 800;
+	var h = 500;
+	var svg = d3.select("#viz");
+	svg.attr("width", w).attr("height", h);
+	svg.selectAll("rect")
+		.data([50, 40, 30])
+		.enter().append("rect")
+		.attr(
+			{
+			"width": 3,
+			 "height": function(d) {return d;},
+			 "x":function(d) {return d;}
+			}
+			);
+
+
+
 }
 
 // if tag doesn't exist in allTags, add it
