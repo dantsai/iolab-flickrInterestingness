@@ -94,22 +94,6 @@ $(document).ready(function() {
 			}
 		}
 	});
-	// Divi - D3 Code
-	// var w = 800;
-	// var h = 500;
-	// var svg = d3.select("#viz");
-	// svg.attr("width", w).attr("height", h);
-	// svg.selectAll("rect")
-	// 	.data([50, 40, 30])
-	// 	.enter().append("rect")
-	// 	.attr(
-	// 		{
-	// 		"width": 3,
-	// 		 "height": function(d) {return d;},
-	// 		 "x":function(d) {return d;}
-	// 		}
-	// 	);
-
 
 });
 
@@ -221,6 +205,7 @@ function plotTagHist(allTags) {
 	//Create labels
 	svg.selectAll("text")
 		.data(allTags, tag)
+		.sort()
 		.enter()
 		.append("text")
 		.text(function(d) {
@@ -233,10 +218,18 @@ function plotTagHist(allTags) {
 		.attr("y", function(d) {
 			return h - yScale(d.count) + 14;
 		})
-		.attr("dy", ".35em")
+		.attr("dx", "-.8em")
+		.attr("dy", 15)
+		.attr("text-anchor", "middle")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
-		.attr("fill", "black");
+		.attr("fill", "black")
+		.attr("transform", function(d) {
+			// First, rotate the group (not the text) and then translate it
+			// by the same amount that used to be applied via "x" attr
+			return "rotate(" + ((d.x + d.dx / 2 - Math.PI / 2) / Math.PI * 180) + ") " +
+				"translate(" + Math.sqrt(d.y) + ")";
+		});
 
 
 
