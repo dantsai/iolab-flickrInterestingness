@@ -43,10 +43,10 @@ var allCameras = [];
 var ajaxConnections = 0;
 var photosPerDay = 50; // set to 50 for final data? 50*30 = ~1500 per month for a good sample size.
 var totalAjax = 0;
-// var apikey = '803b4fba97fed821c7d451d31da3c60f';
+var apikey = '803b4fba97fed821c7d451d31da3c60f';
 
 // dan's auth info
-var apikey = '844ff70b5e025eac452ff98c661b7295';
+// var apikey = '844ff70b5e025eac452ff98c661b7295';
 // var secret = '821ad3df37bd73f5';
 
 // FlickrPhoto object constructor. Doesn't have the camera/make/model, which are added later
@@ -221,9 +221,9 @@ function addCameraToPhotos(photoid, cameraString, make, model) {
 		}
 	}
 
+	var found = 0;
 	// if camera doesn't exist in allCameras, add it. if it exists, add photoID to photo list
 	for(var i=0, j=allCameras.length ; i<j ; ++i) {
-		var found = 0;
 		if(allCameras[i].camera == cameraString) {
 			// found it!
 			allCameras[i].photoIDs.push(photoid);
