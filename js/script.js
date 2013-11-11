@@ -41,7 +41,7 @@ var allPhotos = [];
 var allTags = [];
 var allCameras = [];
 var ajaxConnections = 0;
-var photosPerDay = 5;
+var photosPerDay = 50; // set to 50 for final data? 50*30 = ~1500 per month for a good sample size.
 var totalAjax = 0;
 // var apikey = '803b4fba97fed821c7d451d31da3c60f';
 
@@ -166,7 +166,14 @@ function getExif(photoObj) {
 			}
 
 			if(ajaxConnections==0) {
-				// finished with all requests, stringify
+				// finished with all requests, sort, stringify and update the textareas
+				allPhotos.sort(function(a,b) { return parseInt(b.tagcount) - parseInt(a.tagcount) } );
+				allTags.sort(function(a,b) { return parseInt(b.count) - parseInt(a.count) } );
+				allCameras.sort(function(a,b) { return parseInt(b.count) - parseInt(a.count) } );
+		        var chosenMonth = $("#startdatepicker").val();
+				$("#allPhotosLabel").text(chosenMonth + "photos.json");
+				$("#allTagsLabel").text(chosenMonth + "tags.json");
+				$("#allCamerasLabel").text(chosenMonth + "cameras.json");
 				$("#allPhotosResult").text(JSON.stringify(allPhotos, null, " "));
 				$("#allTagsResult").text(JSON.stringify(allTags, null, " "));
 				$("#allCamerasResult").text(JSON.stringify(allCameras, null, " "));
@@ -220,6 +227,7 @@ function addCameraToPhotos(photoid, cameraString, make, model) {
 		if(allCameras[i].camera == cameraString) {
 			// found it!
 			allCameras[i].photoIDs.push(photoid);
+			allCameras[i].count++;
 			found = 1;
 		} else if(i == (j-1) && found == 0) {
 			// it's not in allCamera (ie, it is not found, and we reached the last camera in array allCameras

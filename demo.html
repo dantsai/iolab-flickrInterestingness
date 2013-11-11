@@ -10,17 +10,11 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="js/jquery.mtz.monthpicker.js"></script>
 <script>
-//   $(function() {
-//   $( "#startdatepicker" ).datepicker({ dateFormat: 'yy-mm-dd' });
-// });
-//   $(function() {
-//   $( "#enddatepicker" ).datepicker();
-// });
 $(function() {
 	options = {
 	    pattern: 'yyyy-mm', // Default is 'mm/yyyy' and separator char is not mandatory
 	    selectedYear: 2013,
-	    startYear: 2008,
+	    startYear: 2006,
 	    finalYear: 2013,
 	};
 
@@ -29,23 +23,19 @@ $(function() {
 </script>
 </head>
 <body>
-<p>Start Date: <input type="text" id="startdatepicker" />
-<!--End Date: <input type="text" id="enddatepicker" /></p> -->
-<input type="button" id="getInterestingnessPhotos" value="Photos based on interestingness"/>
+<p>Choose month: <input type="text" id="startdatepicker" />
+<input type="button" id="getInterestingnessPhotos" value="get photos"/>
 <div>
-	<textarea id="allPhotosResult" rows="48" cols="100"></textarea>
+	<p id="allPhotosLabel">allPhotos:</p>
+	<textarea id="allPhotosResult" rows="30" cols="100"></textarea>
 </div>
 <div>
-	<textarea id="allTagsResult" rows="10" cols="100"></textarea>
+	<p id="allTagsLabel">allTags:</p>
+	<textarea id="allTagsResult" rows="30" cols="100"></textarea>
 </div>
 <div>
-	<textarea id="allCamerasResult" rows="48" cols="100"></textarea>
+	<p id="allCamerasLabel">allCameras:</p>
+	<textarea id="allCamerasResult" rows="30" cols="100"></textarea>
 </div>
-
 </body>
-
 </html>
-<!--Dheera: END OF FILE -->
-
-
-
