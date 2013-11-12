@@ -16,6 +16,11 @@
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="js/d3.min.js"></script>
+    <script src="js/script_divi.js"></script>
+    <script src="js/jquery.mtz.monthpicker.js"></script>
+
 
 </head>
 
@@ -70,33 +75,46 @@
 
     <div id="criteria-pickers">
 
-      <div id="slider">
+<!--      <div id="slider">
 	   	</div><!-- /slider -->
 
-  		<div id="sort-by">
-	   		<a href="#"><i class="sort-icon icon-tag"></i></a>
-		  	<a href="#"><i class="sort-icon icon-camera"></i></a>
-			 <a href="#"><i class="sort-icon icon-map-marker"></i></a>
-		  </div><!-- /sort-by -->
+      <p>Start Date:
+        <input type="text" id="startdatepicker" />
+      <input type="button" id="getInterestingnessPhotos" value="Photos based on interestingness"/>
+      <div id="sort-by">
+        <a href="#"><i class="sort-icon icon-tag"></i></a>
+        <a href="#"><i class="sort-icon icon-camera"></i></a>
+      </div><!-- /sort-by -->
+      </p>
 
     </div><!-- /criteria-pickers -->
 
 	</div><!-- /criteria -->
 
-
 	<div id="charts_maps">
-
-  <!--  <svg id="visualization" xmlns="http://www.w3.org/2000/svg" version="1.1">
-    </svg> -->
-
 	</div><!-- / charts_maps-->
 
 </div><!-- container -->
 
+  <svg id="viz" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+  <br><br>
+  <svg id="viz-camera" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+
+
+
   <script>
+
   $(function() {
-    $( "#slider" ).slider();
+    options = {
+      pattern: 'yyyy-mm', // Default is 'mm/yyyy' and separator char is not mandatory
+      selectedYear: 2013,
+      startYear: 2008,
+      finalYear: 2013,
+    };
+
+    $('#startdatepicker').monthpicker(options);
   });
+
   </script>
 
 
