@@ -117,8 +117,8 @@ body {
 
 /* charts */
 
-#charts {
-    min-height: 300px;
+#d3_charts {
+    padding: 30px;
 }
 
 
