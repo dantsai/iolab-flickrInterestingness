@@ -194,6 +194,8 @@ function plotTagHist(allTags) {
 		return d.tag;
 	};
 
+var jsonfilename=$("#startdatepicker").val()+"photos.json";
+var filepath = "json/"+jsonfilename;
 
 	var svg = d3.select("#viz");
 	svg.attr("width", w).attr("height", h);
@@ -216,7 +218,45 @@ function plotTagHist(allTags) {
 	})
 		.attr("fill", function(d) {
 			return "rgb(0, 0, " + (d.count * 30) + ")";
+		})
+		.on("click",function(d){ 
+			// start: added by dheera
+			$(".carousel-inner").empty();
+
+					$.getJSON(filepath, function(data){
+
+					for(var i=0;i< d.photoIDs.length; i++)
+					{
+						var id = d.photoIDs[i];
+
+						for (var j = 0; j < data.length; j++) {
+
+						    var object = data[j];
+						    
+						    if(id===object["id"]){
+						    	
+							var t_url = "http://farm" + object["farm"] + ".static.flickr.com/" + object["server"] + "/" + object["id"] + "_" + object["secret"] + "_" + "t.jpg";
+						    
+						    console.log(t_url);
+
+						    if(i==0)
+						    {
+								$(".carousel-inner").append('<div class="item active"><img src='+t_url+' alt=""><div class="carousel-caption"><h4>Title '+(i+1)+'</h4><p></p>');
+
+							}
+							else{
+								$(".carousel-inner").append('<div class="item"><img src='+t_url+' alt=""><div class="carousel-caption"><h4>Title '+(i+1)+'</h4><p></p>');
+							}			   
+						}
+
+					}
+				}
 		});
+//end: added by dheera
+
+	});
+
+
 
 	//Create labels
 	svg.selectAll("text")
