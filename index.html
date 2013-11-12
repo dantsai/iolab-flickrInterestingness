@@ -78,14 +78,13 @@
       <input type="button" id="getInterestingnessPhotos" value="Photos based on interestingness"/>
 
       <div id="sort-by">
-        <a href="#"><i class="sort-icon icon-tag"></i></a>
-        <a href="#"><i class="sort-icon icon-camera"></i></a>
+        <a href="#" id="show_viz"><i class="sort-icon icon-tag"></i></a>
+        <a href="#" id="show_viz-camera"><i class="sort-icon icon-camera"></i></a>
       </div><!-- /sort-by -->
   </div><!-- /criteria -->
 
     <div id="d3_charts">
       <svg id="viz" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
-      <br><br>
       <svg id="viz-camera" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
     </div><!-- d3_charts -->
 
@@ -106,7 +105,18 @@
     };
 
     $('#startdatepicker').monthpicker(options);
-  });
+
+    $("#show_viz").click(function(){
+      $("#viz").show();
+      $("#viz-camera").hide();
+    });
+
+    $("#show_viz-camera").click(function(){
+      $("#viz-camera").show();
+      $("#viz").hide();
+    });
+
+ });
 
   </script>
 
