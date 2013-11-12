@@ -4,8 +4,11 @@ var allCameras = [];
 var ajaxConnections = 0;
 var photosPerDay = 5;
 var totalAjax = 0;
+//D3 - Copy these three variables
 var topTags = [];
 var tagThreshold = 5;
+var topCameras = [];
+
 // var apikey = '803b4fba97fed821c7d451d31da3c60f';
 
 // dan's auth info
@@ -138,17 +141,29 @@ function getExif(photoObj) {
 					// finished with all requests, stringify
 					$("#allPhotosResult").text(JSON.stringify(allPhotos, null, " "));
 					$("#allTagsResult").text(JSON.stringify(allTags, null, " "));
+					//D3 Code starts
 					for (var i = 0, l = allTags.length; i < l; i++) {
 						if (allTags[i].count > tagThreshold && allTags[i].tag != "") {
 							topTags.push(allTags[i])
 						}
 					}
-					console.log("Length of All:" + allTags.length)
-					console.log("Length of Top:" + topTags.length)
-					plotTagHist(topTags);
-				}
+					// console.log("Length of All:" + allTags.length)
+					// console.log("Length of Top:" + topTags.length)
+					// plotTagHist(topTags);
 
-				$("#allCamerasResult").text(JSON.stringify(allCameras, null, " "));
+					//D3 - code ends
+					$("#allCamerasResult").text(JSON.stringify(allCameras, null, " "));
+					// D3 - code starts
+					for (var i = 0, l = allCameras.length; i < l; i++) {
+						if (allCameras[i].count > tagThreshold - 3 && allCameras[i].tag != "") {
+							topCameras.push(allCameras[i])
+						}
+					}
+					console.log("Length of All Cameras:" + allCameras.length)
+					console.log("Length of Top:" + topCameras.length)
+					plotTagHist(topCameras);
+					// D3 code ends
+				}
 			}
 		}
 	)
@@ -157,7 +172,7 @@ function getExif(photoObj) {
 			--ajaxConnections;
 		});
 }
-
+//D3 - Copy the below fucntion
 function plotTagHist(allTags) {
 	console.log('Tags:');
 	console.log(allTags);
