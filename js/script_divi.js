@@ -141,27 +141,28 @@ function getExif(photoObj) {
 					// finished with all requests, stringify
 					$("#allPhotosResult").text(JSON.stringify(allPhotos, null, " "));
 					$("#allTagsResult").text(JSON.stringify(allTags, null, " "));
+
 					//D3 Code starts
 					for (var i = 0, l = allTags.length; i < l; i++) {
 						if (allTags[i].count > tagThreshold && allTags[i].tag != "") {
 							topTags.push(allTags[i])
 						}
 					}
-					// console.log("Length of All:" + allTags.length)
-					// console.log("Length of Top:" + topTags.length)
-					// plotTagHist(topTags);
+					console.log("Length of All Tags:" + allTags.length)
+					console.log("Length of Top Tags:" + topTags.length)
+					plotTagHist(topTags);
 
 					//D3 - code ends
 					$("#allCamerasResult").text(JSON.stringify(allCameras, null, " "));
 					// D3 - code starts
 					for (var i = 0, l = allCameras.length; i < l; i++) {
-						if (allCameras[i].count > tagThreshold - 3 && allCameras[i].tag != "") {
+						if (allCameras[i].count > 1 && allCameras[i].camera != "") {
 							topCameras.push(allCameras[i])
 						}
 					}
 					console.log("Length of All Cameras:" + allCameras.length)
-					console.log("Length of Top:" + topCameras.length)
-					plotTagHist(topCameras);
+					console.log("Length of Top Cameras:" + topCameras.length)
+					plotCameraHist(allCameras);
 					// D3 code ends
 				}
 			}
@@ -238,17 +239,83 @@ function plotTagHist(allTags) {
 		.attr("text-anchor", "middle")
 		.attr("font-family", "sans-serif")
 		.attr("font-size", "11px")
-		.attr("fill", "black")
-		.attr("transform", function(d) {
-			// First, rotate the group (not the text) and then translate it
-			// by the same amount that used to be applied via "x" attr
-			return "rotate(" + ((d.x + d.dx / 2 - Math.PI / 2) / Math.PI * 180) + ") " +
-				"translate(" + Math.sqrt(d.y) + ")";
+		.attr("fill", "black");
+
+
+
+	console.log('D3 for tags completed');
+
+}
+
+//D3 - Copy the below fucntion
+function plotCameraHist(allTags) {
+	console.log('Cameras:');
+	console.log(allTags);
+
+	var w = 900;
+	var h = 400;
+	var xScale = d3.scale.ordinal()
+		.domain(d3.range(allTags.length))
+		.rangeRoundBands([0, w], 0.05);
+
+	var yScale = d3.scale.linear()
+		.domain([0, d3.max(allTags, function(d) {
+			return d.count;
+		})])
+		.range([0, h]);
+
+	var camera = function(d) {
+		return d.camera;
+	};
+
+
+	var svg = d3.select("#viz-camera");
+	svg.attr("width", w).attr("height", h);
+	svg.selectAll("rect")
+		.data(allTags, camera)
+		.enter().append("rect")
+		.attr("x", function(d, i) {
+			return i * 40 + 80;
+		})
+	// .attr("width", 3
+	// 			)
+	.attr("y", function(d) {
+		return h - yScale(d.count);
+	})
+	// .attr("width", xScale.rangeBand())
+	.attr("width", 15)
+
+	.attr("height", function(d) {
+		return yScale(d.count);
+	})
+		.attr("fill", function(d) {
+			return "rgb(0, 0, " + (d.count * 30) + ")";
 		});
 
+	//Create labels
+	svg.selectAll("text")
+		.data(allTags, camera)
+		.sort()
+		.enter()
+		.append("text")
+		.text(function(d) {
+			return d.camera;
+		})
+		.attr("text-anchor", "middle")
+		.attr("x", function(d, i) {
+			return i * 40 + 80;
+		})
+		.attr("y", function(d) {
+			return h - yScale(d.count) + 14;
+		})
+		.attr("dx", "-.8em")
+		.attr("dy", 15)
+		.attr("text-anchor", "middle")
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "11px")
+		.attr("fill", "black");
 
-
-	console.log('D3 completed');
+	console.log('D3 for Camera completed');
 
 }
 
