@@ -1,12 +1,11 @@
-var allPhotos = [];
+var apiKey = '180b1bf5a5f6f2399676fd9ad13fc2e9';
 var allTags = [];
 var allCameras = [];
-var allPhotosWithCameras = [];
 var svg;
 var bottomPadding = 50;
 var w = 900;
 var h = 400;
-var currentDisplay = 'none';
+var currentDisplay = 'tags';
 //get yesterday's date in yyyy-mm-dd format
 function GetYestDate() {
         // Yesterday's date time which will used to set as default date.
@@ -21,7 +20,7 @@ function GetYestDate() {
 
 $(document).ready(function() {
 	//form the URL for getting interestingness photos
-	var url='http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=180b1bf5a5f6f2399676fd9ad13fc2e9&date=' + GetYestDate() + '&extras=url_n&per_page=5&format=json&jsoncallback=?';
+	var url='http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=' + apiKey + '&date=' + GetYestDate() + '&extras=url_n&per_page=5&format=json&jsoncallback=?';
 
 	//call flickr API for getting ten interesting photos from yesterday
 	$.getJSON(url,function(data) {
@@ -40,130 +39,40 @@ $(document).ready(function() {
 		});
 	});
 
-	$("#getInterestingnessPhotos").click(function() {
-		var cleared = 0; // did we have to clear the screen? if we did, we'll have to wait for animations to finish
-		if($("svg").contents().length > 0) {
-			// clear existing stuff
-			clearSVG();
-			cleared = 1;
+	var totalMonths = 58;
+	var firstMonth = new Date(2009, 0, 1);
+    $( "#slider" ).slider({
+		min: 0,
+		max: totalMonths - 1,
+		step: 1,
+		value: totalMonths - 1,
+		slide: function( event, ui ) {
+			var selectedMonth = new Date(firstMonth.getTime());
+			selectedMonth.setMonth(selectedMonth.getMonth() + ui.value);
+			$('#sliderVal').text( selectedMonth.getFullYear() + '-' + zeroPad(selectedMonth.getMonth() + 1,2) );
+			clearSVG('instant');
+			getData();
 		}
-	    var month = $("#startdatepicker").val();
-	    var photosFile = 'json/' + month + 'photos.json';
-	    var tagsFile = 'json/' + month + 'tags.json';
-	    var camerasFile = 'json/' + month + 'cameras.json';
-	    var ajaxConnections = 0;
+    });
+    var selectedMonth = new Date(firstMonth.getTime());
+    selectedMonth.setMonth(selectedMonth.getMonth() + (totalMonths-1));
 
-	    if(!month) {
-			$('#error').fadeIn('slow');
-		} else {
-			$('#criteria i').fadeTo('slow', 1.0);
-			$('#error').fadeOut('slow');
+    $('#sliderVal').text( selectedMonth.getFullYear() + '-' + zeroPad(selectedMonth.getMonth() + 1,2) );
 
-			currentDisplay = 'tags';
-
-		    // grab the three json arrays
-
-		    // after grabbing all 3 json files,
-		    // show the tag bar graph using tagsFile as input
-		    ajaxConnections = 3;
-
-		    // get photos
-			$.getJSON(photosFile,
-			function (data) { 
-				ajaxConnections--;
-
-				allPhotos = data; // this should work; dont think i have to manually push everything to allPhotos through .each()
-
-				allPhotosWithCameras = allPhotos.filter(filterCameras);
-				if(ajaxConnections == 0) {
-					// all 3 have been retrieved
-					if(cleared == 1) {
-						if(currentDisplay == 'camera')
-							window.setTimeout(showCameraGraph, 1000);
-						window.setTimeout(showTagGraph, 1000);
-					}
-					else {
-						if(currentDisplay == 'camera')
-							window.setTimeout(showCameraGraph, 1000);
-						else
-							showTagGraph();
-					}
-				}
-			})
-			.fail(function() {
-				console.log("getPhotos fail");
-				--ajaxConnections;
-			});
-
-			// get tags
-			$.getJSON(tagsFile,
-			function (data) { 
-				ajaxConnections--;
-
-				allTags = data;
-
-				if(ajaxConnections == 0) {
-					// all 3 have been retrieved
-					if(cleared == 1) {
-						if(currentDisplay == 'camera')
-							window.setTimeout(showCameraGraph, 1000);
-						window.setTimeout(showTagGraph, 1000);
-					}
-					else {
-						if(currentDisplay == 'camera')
-							window.setTimeout(showCameraGraph, 1000);
-						else
-							showTagGraph();
-					}
-				}
-			})
-			.fail(function() {
-				console.log("getPhotos fail");
-				--ajaxConnections;
-			});
-
-			// get cameras
-			$.getJSON(camerasFile,
-			function (data) { 
-				ajaxConnections--;
-
-				allCameras = data;
-				if(ajaxConnections == 0) {
-					if(cleared == 1) {
-						if(currentDisplay == 'camera')
-							window.setTimeout(showCameraGraph, 1000);
-						window.setTimeout(showTagGraph, 1000);
-					}
-					else {
-						if(currentDisplay == 'camera')
-							window.setTimeout(showCameraGraph, 1000);
-						else
-							showTagGraph();
-					}
-				}
-			})
-			.fail(function() {
-				console.log("getPhotos fail");
-				--ajaxConnections;
-			});
-		} // end error checking if
-	}); // end clickhandler
+	getData();
 
 	$('#show_viz').click(function() {
-	    var month = $("#startdatepicker").val();
+		var month = $('#sliderVal').text();
 	    if(!month) {
-			$('#error').fadeIn('slow');
+			$('#error').fadeIn('fast');
 		} else if(currentDisplay == 'tags') {
-			return false;
-		} else if(currentDisplay == 'none') {
-			// they selected a date but clicked the icon instead of the button
-			$("#getInterestingnessPhotos").trigger('click');
-			currentDisplay = 'tags';
+			// we're already on this mode. don't do anything.
 			return false;
 		} else {
+			// transitioning from camera to tags
 			currentDisplay = 'tags';
-			$('#criteria i').fadeTo('slow', 1.0);
-			$('#error').fadeOut('slow');
+			$('#criteria i').fadeTo('fast', 1.0);
+			$('#error').fadeOut('fast');
 			clearSVG();
 			window.setTimeout(showTagGraph, 1000);
 		}
@@ -172,21 +81,16 @@ $(document).ready(function() {
 
 
 	$("#show_viz-camera").click(function() {
-	    var month = $("#startdatepicker").val();
+		var month = $('#sliderVal').text();
 	    if(!month) {
-			$('#error').fadeIn('slow');
+			$('#error').fadeIn('fast');
 		} else if(currentDisplay == 'cameras') {
-			// dont do anything...
-			return false;
-		} else if(currentDisplay == 'none') {
-			// they selected a date but clicked the icon instead of the button
-			$("#getInterestingnessPhotos").trigger('click');
-			currentDisplay = 'cameras';
+			// we're already on this mode. don't do anything.
 			return false;
 		} else {
 			currentDisplay = 'cameras';
-			$('#criteria i').fadeTo('slow', 1.0);
-			$('#error').fadeOut('slow');
+			$('#criteria i').fadeTo('fast', 1.0);
+			$('#error').fadeOut('fast');
 			clearSVG();
 			window.setTimeout(showCameraGraph, 1000);
 		}
@@ -195,19 +99,21 @@ $(document).ready(function() {
 
 });
 
-// filtering function for allPhotos to remove photos without cameras
-function filterCameras(element) {
-	return element.camera;
-}
-
-function clearSVG() {
-	var bars = svg.selectAll("rect.bar");
-	bars
-		.transition()
-		.duration (500)
-		.attr("height", 0)
-		.attr("y", h - bottomPadding);
-	window.setTimeout(hide, 500);
+function clearSVG(instant) {
+	if(instant)
+	{
+		$("svg").children().each(function () {
+			$(this).remove();
+		});
+	} else {
+		var bars = svg.selectAll("rect.bar");
+		bars
+			.transition()
+			.duration (500)
+			.attr("height", 0)
+			.attr("y", h - bottomPadding);
+		window.setTimeout(hide, 500);
+	}
 }
 
 function hide() {
@@ -224,6 +130,67 @@ function showTagGraph() {
 
 function showCameraGraph() {
 	showGraph(allCameras, 'cameras');
+}
+
+function getData() {
+	var month = $('#sliderVal').text();
+    var tagsFile = 'json/' + month + 'tags.json';
+    var camerasFile = 'json/' + month + 'cameras.json';
+    var ajaxConnections = 0;
+
+    if(!month) {
+		$('#error').fadeIn('fast');
+	} else {
+		$('#criteria i').fadeTo('fast', 1.0);
+		$('#error').fadeOut('fast');
+
+	    // grab the three json arrays
+
+	    // after grabbing all 2 json files,
+	    // show the tag bar graph using tagsFile as input
+	    ajaxConnections = 2;
+
+		// get tags
+		$.getJSON(tagsFile,
+		function (data) { 
+			ajaxConnections--;
+
+			allTags = data;
+
+			if(ajaxConnections == 0) {
+				// all 3 have been retrieved
+				clearSVG('instant');
+				if(currentDisplay == 'cameras')
+					showCameraGraph();
+				else
+					showTagGraph();
+			}
+		})
+		.fail(function() {
+			console.log("getPhotos fail");
+			--ajaxConnections;
+		});
+
+		// get cameras
+		$.getJSON(camerasFile,
+		function (data) { 
+			ajaxConnections--;
+
+			allCameras = data;
+			if(ajaxConnections == 0) {
+				// all 3 have been retrieved
+				clearSVG('instant');
+				if(currentDisplay == 'cameras')
+					showCameraGraph();
+				else
+					showTagGraph();
+			}
+		})
+		.fail(function() {
+			console.log("getPhotos fail");
+			--ajaxConnections;
+		});
+	} // end error checking if
 }
 
 // general graph. type is either tags or cameras
@@ -306,30 +273,27 @@ function showGraph(arr, type) {
 
 		.attr("class","bar")
 		.on("click",function(d){ 
-			// when clicking on a bar, populate the carousel with 10 photos from the interestingness list
+			// when clicking on a bar, populate the carousel with 5 photos from the interestingness list
 			$(".carousel-inner").empty();
 
-			for(var i = 0 ; i < 10 ; i++)
+			var carouselConnections = 0;
+			for(var i = 0 ; i < 5 ; i++)
 			{
+				++carouselConnections;
 				var id = d.photoIDs[i];
 
-				// find the url information for this photo
-				for (var j = 0 ; j < allPhotos.length ; j++) {
-				    var object = allPhotos[j];
-				    
-				    if(id===object["id"]) {
-						var t_url = "http://farm" + object["farm"] + ".static.flickr.com/" + object["server"] + "/" + object["id"] + "_" + object["secret"] + "_" + "z.jpg";
-					    
-					    if(i==0)
-					    {
-							$(".carousel-inner").append('<div class="item active"><img src='+t_url+' alt="">');
+				//call flickr API for getting ten interesting photos from yesterday
 
+				$.getJSON('http://api.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=' + apiKey + '&photo_id=' + id + '&format=json&jsoncallback=?',function(data) {
+						// find the url information for this photo
+						--carouselConnections;
+						var t_url = "http://farm" + data.photo.farm + ".static.flickr.com/" + data.photo.server + "/" + data.photo.id + "_" + data.photo.secret + "_" + "z.jpg";
+					    
+						$(".carousel-inner").append('<div class="item"><img src='+t_url+' alt="">');
+						if(carouselConnections == 0) {
+							$('.carousel-inner .item:first-child').addClass('active');
 						}
-						else{
-							$(".carousel-inner").append('<div class="item"><img src='+t_url+' alt="">');
-						}			   
-					}
-				}
+				});
 			}
 		})
 		.transition()
@@ -394,21 +358,17 @@ function showGraph(arr, type) {
 			}
 		})
 		.attr("class", "barLabel");
+}
 
-	// show total photo count in topright
-	var totalString;
-	if(type == "tags") {
-		// get total number of photos
-		totalString = "total number of photos: " + allPhotos.length;
-	} else if(type == "cameras") {
-		// get total number of photos with a valid camera (not all photos have camera exif info available)
-		totalString = "photos with camera info: " + allPhotosWithCameras.length;
+
+// flickr api expects date and month to be two digits. this function zero pads
+function zeroPad(num, width) {
+	var n = Math.abs(num);
+	var zeros = Math.max(0, width - Math.floor(n).toString().length );
+	var zeroString = Math.pow(10,zeros).toString().substr(1);
+	if( num < 0 ) {
+		zeroString = '-' + zeroString;
 	}
 
-	svg.append("text")
-		.text(totalString)
-		.attr("text-anchor", "end")
-		.attr("x", w - 50)
-		.attr("y", 15)
-		.attr("class", "countLabel");
+	return zeroString+n;
 }

@@ -14,33 +14,11 @@
     <!-- link to js file -->
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
     <script src="js/index.js"></script>
     <script src="js/jquery.mtz.monthpicker.js"></script>
-
-<script>
-$(function() {
-    options = {
-      pattern: 'yyyy-mm', // Default is 'mm/yyyy' and separator char is not mandatory
-      selectedYear: 2013,
-      startYear: 2009,
-      finalYear: 2013,
-    };
-
-    $('#startdatepicker').monthpicker(options);
-    // disable future months that we don't have data for yet.
-    $('#startdatepicker').monthpicker('disableMonths', [11, 12]);
-    $('#startdatepicker').monthpicker().bind('monthpicker-change-year', function (e, year) {
-        $('#startdatepicker').monthpicker('disableMonths', []); // (re)enables all
-        if (year === '2013') {
-            $('#startdatepicker').monthpicker('disableMonths', [11, 12]);
-        }
-    });
-});
-</script>
-
 </head>
 
 <body>
@@ -48,7 +26,7 @@ $(function() {
 <div id="container">
 	<div id="header">
 		<h3><i class="icon-flickr"></i>Interestingness Explorer</h3>
-	</div><!-- /header -->
+	</div>
 
   <div id="photo-holder">
 		<div class="slideshow">
@@ -58,31 +36,29 @@ $(function() {
         <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
       </div>
-    </div><!-- /slideshow -->
-  </div><!-- /photo-holder -->
-</div><!-- /photo-holder -->
+    </div>
+  </div>
+</div>
 
 
 
 	<div id="criteria">
       Choose a month&nbsp;:&nbsp;
-      <input type="text" id="startdatepicker" />
-      <input type="button" id="getInterestingnessPhotos" value="What's interesting?"/>
+      <div id="slider"></div>
+      <div id="sliderVal"></div>
 
       <div id="sort-by">
         <a href="#" id="show_viz"><i class="sort-icon icon-tag"></i></a>
         <a href="#" id="show_viz-camera"><i class="sort-icon icon-camera"></i></a>
-      </div><!-- /sort-by -->
-
-  </div><!-- /criteria -->
+      </div>
+  </div>
 
     <div id="d3_charts">
       <div id="error">nothing to see here... until you choose a month</div>
       <svg id="viz" width="900" height="400" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
       <div id="count-popup"></div>
-    </div><!-- d3_charts -->
-
-</div><!-- container -->
+    </div>
+</div>
 
 </body>
 </html>
