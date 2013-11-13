@@ -7,10 +7,8 @@ body {
 
 #header {
     padding: 5px;
-    text-shadow: 2px 2px #696969;
     color: #fff;
     background: url(../img/binding_dark.png) repeat;
-    /*    background-color: #0063DC; (flickr blue) */
     box-shadow: 1px 1px 10px #696969;
     -moz-box-shadow: 1px 1px 10px #696969;
     -webkit-box-shadow: 1px 1px 10px #696969;
@@ -41,7 +39,6 @@ body {
     margin: 0 auto;
     width: 400px;
     padding: 39px 19px 14px;
-    /*padding-top: 19px;*/
     background-color: #fff;
     border: 1px solid #ddd;
     -webkit-border-radius: 4px;
@@ -58,10 +55,22 @@ body {
     text-align: center;
     font-size: 24px;
     margin: 0 auto;
+    padding-left: 120px;
     min-height: 70px;
     line-height: 70px;
     background: url(../img/binding_dark.png) repeat;
     color: #fff;
+}
+
+#sort-by {
+    float: right;
+}
+
+#error {
+    font-size: 20px;
+    color: #f88;
+    /*opacity: 0;*/
+    display: none;
 }
 
 #criteria input[type="text"] {
@@ -74,21 +83,6 @@ body {
     margin-left: 10px;
 }
 
-
-#slider {
-    width: 450px;
-    float: right;
-    margin-top: 30px;
-    margin-right: 390px;
-
-
-}
-
-#sort-by {
-    float: right;
-}
-
-
 /* criteria / icons */
 
 #criteria i {
@@ -99,6 +93,7 @@ body {
     border: 3px solid #fff;
     border-radius: 50%;
     display: inline-block;
+    opacity: .3;
     width: 50px;
     height: 50px;
     line-height: 50px;
@@ -116,6 +111,12 @@ body {
     text-decoration: none;
 }
 
+#criteria i.selected {
+    color: #0063DC;
+    border: 3px solid #FF0084;
+    text-decoration: none;
+}
+
 /* charts */
 
 #d3_charts {
@@ -127,16 +128,23 @@ body {
     fill: #666;
 }
 
-.barlabel {
-    fill: #000;
+.barLabel {
+    fill: #333;
     font-family: sans-serif;
     font-size: 11px;
 }
 
+.countLabel {
+    color: #999;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #666;
   shape-rendering: crispEdges;
 }
 
@@ -145,14 +153,14 @@ body {
 }
 
 .axis text {
+    fill: #666;
     font-family: sans-serif;
     font-size: 11px;
 }
 
 .grid {
-    fill:none; stroke:#ddd; stroke-dasharray:5,5; stroke-width:1px;
+    fill:none; stroke:#ccc; stroke-dasharray:5,5; stroke-width:1px;
 }
-
 
 /* content */
 
