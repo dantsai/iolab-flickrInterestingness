@@ -18,4 +18,4 @@ Shaohan Chen - HTML/CSS</p>
 <p>http://dantsai.com/projects/flickrexplorer/demo/</p>
 
 <h3>Known Bugs</h3>
-<p>No known bugs.</p>
+<p>When you scrub through the slider very quickly, the animations get a little choppy as it draws, clears and redraws many times.</p>
