@@ -6,6 +6,38 @@ var bottomPadding = 50;
 var w = 900;
 var h = 400;
 $(document).ready(function() {
+
+//get yesterday's date in yyyy-mm-dd format
+	function GetYestDate() {
+	        // Yesterday's date time which will used to set as default date.
+	        var yestDate = new Date();
+	        yestDate = yestDate.getFullYear() + "-" +
+	                       ("0" + (yestDate.getMonth() + 1)).slice(-2) + "-" +
+	                       ("0" + (yestDate.getDate()-1)).slice(-2);
+	 
+	        return yestDate;
+	}
+
+	//form the URL for getting interestingness photos
+	var url='http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=180b1bf5a5f6f2399676fd9ad13fc2e9&date=' + GetYestDate() + '&extras=url_n&per_page=5&format=json&jsoncallback=?';
+
+	//call flickr API for getting five interesting photos from yesterday
+	$.getJSON(url,function(data) {
+	var index=0;
+		$.each(data.photos.photo, function(key, value) {
+			if(index==0)
+			{
+				$(".carousel-inner").append('<div class="item active"><img src='+value.url_n+' alt=""><div class="carousel-caption"><h4>Title '+(index+1)+'</h4><p></p>');
+
+			}
+			else{
+				$(".carousel-inner").append('<div class="item"><img src='+value.url_n+' alt=""><div class="carousel-caption"><h4>Title '+(index+1)+'</h4><p></p>');
+			}
+			index++;
+
+		});
+	});
+
 	$("#getInterestingnessPhotos").click(function() {
 		var cleared = 0; // did we have to clear the screen? if we did, we'll have to wait for animations to finish
 		if($("svg").contents().length > 0) {
@@ -182,7 +214,7 @@ function showTagGraph() {
 						    
 						    if(id===object["id"]){
 						    	
-							var t_url = "http://farm" + object["farm"] + ".static.flickr.com/" + object["server"] + "/" + object["id"] + "_" + object["secret"] + "_" + "t.jpg";
+							var t_url = "http://farm" + object["farm"] + ".static.flickr.com/" + object["server"] + "/" + object["id"] + "_" + object["secret"] + "_" + "z.jpg";
 						    
 						    console.log(t_url);
 
