@@ -5,7 +5,7 @@
 
 <h3>Team Members and Roles</h3>
 <p>Dan Tsai - D3 work, working with Flickr API, JSON caching<br/>
-Dheera Prabhakar - JavaScripting, onclick behavior for bars and carousel<br />
+Dheera Prabhakar - JavaScripting, onclick behavior for bars and carousel. Populating carousel on page load.<br />
 Divya Menghani - JavaScripting, creating some bar graph code in D3<br />
 Shaohan Chen - HTML/CSS</p>
 

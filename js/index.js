@@ -6,7 +6,40 @@ var svg;
 var bottomPadding = 50;
 var w = 900;
 var h = 400;
+var currentDisplay = 'none';
+//get yesterday's date in yyyy-mm-dd format
+function GetYestDate() {
+        // Yesterday's date time which will used to set as default date.
+        var yestDate = new Date();
+        yestDate = yestDate.getFullYear() + "-" +
+                       ("0" + (yestDate.getMonth() + 1)).slice(-2) + "-" +
+                       ("0" + (yestDate.getDate()-1)).slice(-2);
+ 
+        return yestDate;
+}
+
+
 $(document).ready(function() {
+	//form the URL for getting interestingness photos
+	var url='http://api.flickr.com/services/rest/?method=flickr.interestingness.getList&api_key=180b1bf5a5f6f2399676fd9ad13fc2e9&date=' + GetYestDate() + '&extras=url_n&per_page=5&format=json&jsoncallback=?';
+
+	//call flickr API for getting ten interesting photos from yesterday
+	$.getJSON(url,function(data) {
+	var index=0;
+		$.each(data.photos.photo, function(key, value) {
+			if(index==0)
+			{
+				$(".carousel-inner").append('<div class="item active"><img src='+value.url_n+' alt="">');
+
+			}
+			else{
+				$(".carousel-inner").append('<div class="item"><img src='+value.url_n+' alt="">');
+			}
+			index++;
+
+		});
+	});
+
 	$("#getInterestingnessPhotos").click(function() {
 		var cleared = 0; // did we have to clear the screen? if we did, we'll have to wait for animations to finish
 		if($("svg").contents().length > 0) {
@@ -25,6 +58,8 @@ $(document).ready(function() {
 		} else {
 			$('#criteria i').fadeTo('slow', 1.0);
 			$('#error').fadeOut('slow');
+
+			currentDisplay = 'tags';
 
 		    // grab the three json arrays
 
@@ -94,29 +129,50 @@ $(document).ready(function() {
 		} // end error checking if
 	}); // end clickhandler
 
-	$("#show_viz-camera").click(function() {
-	    var month = $("#startdatepicker").val();
-	    if(!month) {
-			$('#error').fadeIn('slow');
-		} else {
-			$('#criteria i').fadeTo('slow', 1.0);
-			$('#error').fadeOut('slow');
-			clearSVG();
-			window.setTimeout(showCameraGraph, 1000);
-		}
-	});
-
 	$('#show_viz').click(function() {
 	    var month = $("#startdatepicker").val();
 	    if(!month) {
 			$('#error').fadeIn('slow');
+		} else if(currentDisplay == 'tags') {
+			return false;
+		} else if(currentDisplay == 'none') {
+			// they selected a date but clicked the icon instead of the button
+			$("#getInterestingnessPhotos").trigger('click');
+			currentDisplay = 'tags';
+			return false;
 		} else {
+			currentDisplay = 'tags';
 			$('#criteria i').fadeTo('slow', 1.0);
 			$('#error').fadeOut('slow');
 			clearSVG();
 			window.setTimeout(showTagGraph, 1000);
 		}
+		return false;
 	});
+
+
+	$("#show_viz-camera").click(function() {
+	    var month = $("#startdatepicker").val();
+	    if(!month) {
+			$('#error').fadeIn('slow');
+		} else if(currentDisplay == 'cameras') {
+			// dont do anything...
+			return false;
+		} else if(currentDisplay == 'none') {
+			// they selected a date but clicked the icon instead of the button
+			$("#getInterestingnessPhotos").trigger('click');
+			currentDisplay = 'cameras';
+			return false;
+		} else {
+			currentDisplay = 'cameras';
+			$('#criteria i').fadeTo('slow', 1.0);
+			$('#error').fadeOut('slow');
+			clearSVG();
+			window.setTimeout(showCameraGraph, 1000);
+		}
+		return false;
+	});
+
 });
 
 // filtering function for allPhotos to remove photos without cameras
@@ -230,20 +286,17 @@ function showGraph(arr, type) {
 			// when clicking on a bar, populate the carousel with 10 photos from the interestingness list
 			$(".carousel-inner").empty();
 
-			for(var i=0;i< d.photoIDs.length; i++)
+			for(var i=0;i< 10; i++)
 			{
 				var id = d.photoIDs[i];
 
+				// find the url information for this photo
 				for (var j = 0; j < allPhotos.length; j++) {
-
 				    var object = allPhotos[j];
 				    
-				    if(id===object["id"]){
-				    	
+				    if(id===object["id"]) {
 						var t_url = "http://farm" + object["farm"] + ".static.flickr.com/" + object["server"] + "/" + object["id"] + "_" + object["secret"] + "_" + "z.jpg";
 					    
-					    console.log(t_url);
-
 					    if(i==0)
 					    {
 							$(".carousel-inner").append('<div class="item active"><img src='+t_url+' alt="">');
@@ -253,7 +306,6 @@ function showGraph(arr, type) {
 							$(".carousel-inner").append('<div class="item"><img src='+t_url+' alt="">');
 						}			   
 					}
-
 				}
 			}
 		})
