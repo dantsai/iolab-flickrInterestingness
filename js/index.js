@@ -77,10 +77,17 @@ $(document).ready(function() {
 				allPhotosWithCameras = allPhotos.filter(filterCameras);
 				if(ajaxConnections == 0) {
 					// all 3 have been retrieved
-					if(cleared == 1)
+					if(cleared == 1) {
+						if(currentDisplay == 'camera')
+							window.setTimeout(showCameraGraph, 1000);
 						window.setTimeout(showTagGraph, 1000);
-					else
-						showTagGraph();
+					}
+					else {
+						if(currentDisplay == 'camera')
+							window.setTimeout(showCameraGraph, 1000);
+						else
+							showTagGraph();
+					}
 				}
 			})
 			.fail(function() {
@@ -97,10 +104,17 @@ $(document).ready(function() {
 
 				if(ajaxConnections == 0) {
 					// all 3 have been retrieved
-					if(cleared == 1)
+					if(cleared == 1) {
+						if(currentDisplay == 'camera')
+							window.setTimeout(showCameraGraph, 1000);
 						window.setTimeout(showTagGraph, 1000);
-					else
-						showTagGraph();
+					}
+					else {
+						if(currentDisplay == 'camera')
+							window.setTimeout(showCameraGraph, 1000);
+						else
+							showTagGraph();
+					}
 				}
 			})
 			.fail(function() {
@@ -115,11 +129,17 @@ $(document).ready(function() {
 
 				allCameras = data;
 				if(ajaxConnections == 0) {
-					// all 3 have been retrieved
-					if(cleared == 1)
+					if(cleared == 1) {
+						if(currentDisplay == 'camera')
+							window.setTimeout(showCameraGraph, 1000);
 						window.setTimeout(showTagGraph, 1000);
-					else
-						showTagGraph();
+					}
+					else {
+						if(currentDisplay == 'camera')
+							window.setTimeout(showCameraGraph, 1000);
+						else
+							showTagGraph();
+					}
 				}
 			})
 			.fail(function() {
@@ -277,6 +297,9 @@ function showGraph(arr, type) {
 		.attr("x", function(d, i) {
 			return i * barSpacing + 80;
 		})
+		.attr("desc", function(d) {
+			return d.count;
+		})
 		.attr("width", barWidth)
 		.attr("height", 0)
 		.attr("y", h - bottomPadding)
@@ -286,12 +309,12 @@ function showGraph(arr, type) {
 			// when clicking on a bar, populate the carousel with 10 photos from the interestingness list
 			$(".carousel-inner").empty();
 
-			for(var i=0;i< 10; i++)
+			for(var i = 0 ; i < 10 ; i++)
 			{
 				var id = d.photoIDs[i];
 
 				// find the url information for this photo
-				for (var j = 0; j < allPhotos.length; j++) {
+				for (var j = 0 ; j < allPhotos.length ; j++) {
 				    var object = allPhotos[j];
 				    
 				    if(id===object["id"]) {
@@ -317,8 +340,28 @@ function showGraph(arr, type) {
 
 		.attr("y", function(d) {
 			return h - bottomPadding - yScale(d.count);
-		})
-;
+		});
+
+	// onHover, show count
+	// hover event interaction
+	$("#viz rect").on("mouseenter", function() {
+		var self = $(this);
+
+		self.animate({"opacity": .8}, 100);
+
+		$("#count-popup")
+			.css({
+				"left": parseInt(self.position().left) - barWidth / 2 - 5,
+				"top": self.position().top + 5
+			})
+			.text(self.attr("desc"))
+			.fadeIn(50);
+	}).on("mouseleave", function() {
+		var self = $(this);
+		self.animate({"opacity": 1}, 100);
+		$("#count-popup").fadeOut(50);
+	});
+
 
 	// text labels
 	svg.selectAll("text.barLabel")
@@ -368,5 +411,4 @@ function showGraph(arr, type) {
 		.attr("x", w - 50)
 		.attr("y", 15)
 		.attr("class", "countLabel");
-
 }

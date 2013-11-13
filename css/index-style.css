@@ -122,10 +122,12 @@ body {
 #d3_charts {
     padding: 30px;
     text-align: center;
+    position: relative;
 }
 
 .bar {
-    fill: #666;
+    fill: #405D85;
+    opacity: 1;
 }
 
 .barLabel {
@@ -162,8 +164,20 @@ body {
     fill:none; stroke:#ccc; stroke-dasharray:5,5; stroke-width:1px;
 }
 
-/* content */
+#count-popup {
+    color: #fff;
+    display: none;
+    font-size: 11px;
+    left: 0;
+    height: 20px;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 70px;
+    z-index: 100;
+}
 
+/* content */
 
 .column {
     width: 650px;
