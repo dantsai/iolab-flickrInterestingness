@@ -6,7 +6,7 @@
 <p>It is quite interesting (pun intended..) to see how popular tags change over the course of year, and to see how the tags/cameras used change over the years.</p>
 
 <h3>Team Members and Roles</h3>
-<p>Dan Tsai - D3 work, working with Flickr API, JSON caching<br/>
+<p>Dan Tsai - D3 work, JavaScript/jQuery/jQueryUI work, working with Flickr API, JSON caching, HTML/CSS<br/>
 Dheera Prabhakar - JavaScripting, onclick behavior for bars and carousel. Populating carousel on page load.<br />
 Divya Menghani - JavaScripting, creating some bar graph code in D3<br />
 Shaohan Chen - HTML/CSS</p>
