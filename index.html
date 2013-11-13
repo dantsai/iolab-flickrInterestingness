@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Flickr Interestingness Visualization</title>
+    <title>Flickr Interestingness Explorer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -9,18 +9,40 @@
     <link rel="stylesheet" type="text/css" href="css/index-style.css">
     <link rel="stylesheet" type="text/css" href="font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
     <!-- link to js file -->
-    <script src="js/slider.js"></script>
     <script src="js/jquery-1.10.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="js/d3.min.js"></script>
-    <script src="js/script_divi.js"></script>
+    <!-- // <script src="js/script_divi.js"></script> -->
+    <script src="js/index.js"></script>
     <script src="js/jquery.mtz.monthpicker.js"></script>
 
+<script>
+$(function() {
+    options = {
+      pattern: 'yyyy-mm', // Default is 'mm/yyyy' and separator char is not mandatory
+      selectedYear: 2013,
+      startYear: 2009,
+      finalYear: 2013,
+    };
+
+    $('#startdatepicker').monthpicker(options);
+
+    // $("#show_viz").click(function(){
+    //   $("#viz").show();
+    //   $("#viz-camera").hide();
+    // });
+
+    // $("#show_viz-camera").click(function(){
+    //   $("#viz-camera").show();
+    //   $("#viz").hide();
+    // });
+});
+</script>
 
 </head>
 
@@ -28,54 +50,53 @@
 
 <div id="container">
 	<div id="header">
-		<h3><i class="icon-flickr"></i>Interestingness</h3>
+		<h3><i class="icon-flickr"></i>Interestingness Explorer</h3>
 	</div><!-- /header -->
 
-	<div id="photo-holder">
+  <div id="photo-holder">
 		<div class="slideshow">
-              <div id="myCarousel" class="carousel slide">
-                <ol class="carousel-indicators">
-                  <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                  <li data-target="#myCarousel" data-slide-to="1"></li>
-                  <li data-target="#myCarousel" data-slide-to="2"></li>
-                </ol>
-                <div class="carousel-inner">
-                  <div class="item active">
-                    <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-01.jpg" alt=""> <!-- picture 1 -->
-                    <div class="carousel-caption">
-                      <h4>Title 1</h4>
-                      <p></p>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-02.jpg" alt="">
-                    <div class="carousel-caption">
-                      <h4>Title 2</h4>
-                      <p></p>
-                    </div>
-                  </div>
-                  <div class="item">
-                    <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-03.jpg" alt="">
-                    <div class="carousel-caption">
-                      <h4>Title 3</h4>
-                      <p></p>
-                    </div>
-                  </div>
-                </div>
-                <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-              </div>
-        </div><!-- /slideshow -->
-    </div><!-- /photo-holder -->
-
-	</div><!-- /photo-holder -->
+      <div id="myCarousel" class="carousel slide">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active">
+            <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-01.jpg" alt=""> <!-- picture 1 -->
+            <div class="carousel-caption">
+              <h4>Title 1</h4>
+              <p></p>
+            </div>
+          </div>
+          <div class="item">
+            <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-02.jpg" alt="">
+            <div class="carousel-caption">
+              <h4>Title 2</h4>
+              <p></p>
+            </div>
+          </div>
+          <div class="item">
+            <img src="http://getbootstrap.com/2.3.2/assets/img/bootstrap-mdo-sfmoma-03.jpg" alt="">
+            <div class="carousel-caption">
+              <h4>Title 3</h4>
+              <p></p>
+            </div>
+          </div>
+        </div>
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+      </div>
+    </div><!-- /slideshow -->
+  </div><!-- /photo-holder -->
+</div><!-- /photo-holder -->
 
 
 
 	<div id="criteria">
-      Start Date&nbsp;:&nbsp;
+      Choose a month&nbsp;:&nbsp;
       <input type="text" id="startdatepicker" />
-      <input type="button" id="getInterestingnessPhotos" value="Photos based on interestingness"/>
+      <input type="button" id="getInterestingnessPhotos" value="What's interesting?"/>
 
       <div id="sort-by">
         <a href="#" id="show_viz"><i class="sort-icon icon-tag"></i></a>
@@ -84,43 +105,11 @@
   </div><!-- /criteria -->
 
     <div id="d3_charts">
-      <svg id="viz" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
-      <svg id="viz-camera" xmlns="http://www.w3.org/2000/svg" version="1.1" display="none"></svg>
+      <svg id="viz" width="900" height="400" xmlns="http://www.w3.org/2000/svg" version="1.1"></svg>
+      <!-- <svg id="viz-camera" xmlns="http://www.w3.org/2000/svg" version="1.1" display="none"></svg> -->
     </div><!-- d3_charts -->
 
 </div><!-- container -->
-
-
-
-
-
-  <script>
-
-  $(function() {
-    options = {
-      pattern: 'yyyy-mm', // Default is 'mm/yyyy' and separator char is not mandatory
-      selectedYear: 2013,
-      startYear: 2008,
-      finalYear: 2013,
-    };
-
-    $('#startdatepicker').monthpicker(options);
-
-    $("#show_viz").click(function(){
-      $("#viz").show();
-      $("#viz-camera").hide();
-    });
-
-    $("#show_viz-camera").click(function(){
-      $("#viz-camera").show();
-      $("#viz").hide();
-    });
-
- });
-
-  </script>
-
-
 
 </body>
 </html>
