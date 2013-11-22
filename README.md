@@ -15,7 +15,7 @@ Shaohan Chen - HTML/CSS</p>
 <p>HTML, CSS, JavaScript/jQuery, D3.js, Flickr API</p>
 
 <h3>Link to Demo Version</h3>
-<p>http://dantsai.com/projects/flickrexplorer/demo/</p>
+<p>http://dantsai.com/flickrexplorer_iolab/</p>
 
 <h3>Known Bugs</h3>
 <p>When you scrub through the slider very quickly, the animations get a little choppy as it draws, clears and redraws many times.</p>
